@@ -3,6 +3,7 @@ package MyMathLib;
 import java.util.Arrays;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 
 public class Vector {
@@ -48,6 +49,11 @@ public class Vector {
         return new Vector(added);
     }
 
+    public Vector apply(Function<Double, Double> function) {
+        double[] doubles = Arrays.stream(this.values).map(function::apply).toArray();
+        return new Vector(doubles);
+    }
+
     public Vector which(Predicate<Double> predicate) {
         IntStream range = IntStream.range(0, this.values.length);
         double[] valueArray = range.filter(i -> predicate.test(this.values[i])).mapToDouble(x -> x).toArray();
@@ -75,9 +81,11 @@ public class Vector {
         return Arrays.stream(x1.times(x2).values).sum();
     }
 
-    public Vector applyFunction(Function<Double, Double> fun) {
-        double[] doubles = Arrays.stream(this.values).map(fun::apply).toArray();
-        return new Vector(doubles);
+    public static Vector concat(Vector x1, Vector x2) {
+        DoubleStream s1 = Arrays.stream(x1.values);
+        DoubleStream s2 = Arrays.stream(x2.values);
+        double[] values = DoubleStream.concat(s1, s2).toArray();
+        return new Vector(values);
     }
 
     @Override
