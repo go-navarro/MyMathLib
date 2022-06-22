@@ -56,8 +56,15 @@ public class VectorTest {
     }
 
     @Test
+    public void testSlice() {
+        Assert.assertEquals(new Vector(0.0, 1.0), x1.slice(2));
+        Assert.assertEquals(new Vector(1.0, 0.0), x1.slice(1, 3));
+    }
+
+    @Test
     public void testVectorConcatenation() {
         Assert.assertEquals(new Vector(0, 1, 0, 4, 0, 6), Vector.concat(x1, x2));
     }
+
 
 }
