@@ -70,6 +70,15 @@ public class Vector {
         return at(positions);
     }
 
+    public Vector slice(int start, int stop) {
+        int[] ints = IntStream.range(start, stop).toArray();
+        return at(ints);
+    }
+
+    public Vector slice(int stop) {
+        return slice(0, stop);
+    }
+
     public void print() {
         Arrays.stream(values).forEach(x -> System.out.print(x + ", "));
     }
